@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- JS는 반드시 닫는 body태그 바로 위에 작성해야한다. -->
+  <script>
+    words = ['level', 'noon', 'mom', 'happy', 'ssafy', 'life']
+
+    function palindrome(word) {
+    // word가 회문인지 아닌지 판별
+    for(let i=0; i<word.length/2; i++){
+      if(word[i] === word[word.length-i-1]){
+      }
+      else{
+        return false
+      }
+    }
+    return true
+  }
+  
+for (const word of words) {
+  console.log(palindrome(word))
+}
+
+  </script> 
+</body>
+</html>
