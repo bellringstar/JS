@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Document</title>
+</head>
+<body>
+  
+  <script>
+    // 이곳에 코드를 작성합니다.
+		const inputs = [
+      [3, 10, 5, [1, 3, 5, 7, 9]],    // 3
+      [3, 10, 5, [1, 3, 7, 8, 9]],    // 0
+      [5, 20, 5, [4, 7, 9, 14, 17]],  // 4
+    ]
+
+    function solution(K, N, M, chargers) {
+      // solution 함수 완성
+      let pos = 0
+      let charge = K
+      let cnt = 0
+      let prev = 0
+      while(pos<=N){
+        pos += 1
+        charge -= 1
+        if(pos === N){
+          return console.log(`# ${cnt}`)
+        }
+        console.log(`위치:${pos} 배터리:${charge}`)
+        if(charge<0 && pos === prev){
+          return console.log(`# 0`)
+        }
+        if(charge<=0){
+          // 충전로직
+          if(chargers.includes(pos)){
+            console.log(`charge ${pos}`)
+            charge = K
+            prev = pos
+            cnt += 1
+          }
+          else{
+            pos -= 2
+          }
+        }
+      }
+    }
+    
+    for (const input of inputs) {
+      solution(input[0], input[1], input[2], input[3])
+    }
+  </script>
+</body>
+</html>
