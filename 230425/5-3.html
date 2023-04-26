@@ -1,0 +1,40 @@
+<!-- https://api.themoviedb.org/3/movie/550?api_key=287b67407a50faa8fb9de1599bc963a9 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h3>인기 영화들</h3>
+  <ul>
+
+  </ul>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const ulTag = document.querySelector('ul')
+    const API_URL = 'https://api.themoviedb.org/3/movie/top_rated?api_key=287b67407a50faa8fb9de1599bc963a9&language=ko-kr'
+    const myPromise = axios.get(API_URL)
+
+    myPromise
+      .then((response)=>{
+        // console.log(response.data.results)
+        response.data.results.forEach(element => {
+          console.log(element)
+          if(element.vote_average>=8){
+            liTag = document.createElement('li')
+            liTag.innerText = element.title
+            ulTag.appendChild(liTag)
+          }
+        });
+      })
+      .catch((error)=>{
+        console.log('에러')
+      })
+
+  </script>  
+</body>
+</html>
