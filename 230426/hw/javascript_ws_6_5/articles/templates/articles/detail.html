@@ -76,8 +76,11 @@
           const count = document.querySelector('#comment-count')
           count.innerText = `${commentCount}개의 댓글이 있습니다.`
           const userName = event.target.dataset.userName
+          const span = document.createElement('span')
+          span.innerText = input.value
           li.setAttribute('id',`comment-${commentPk}`)
-          li.innerText = `${userName} - ${input.value} `          
+          li.innerText = `${userName} -  `    
+          li.append(span)      
           const ul = document.querySelector('#comment-list')
           const deleteBtn = document.createElement('button')
           deleteBtn.setAttribute('id',`#delete-${commentPk}`)
@@ -100,55 +103,50 @@
             })
             .then(response => {
               ul.removeChild(currComment)
+              const count = document.querySelector('#comment-count')
+              count.innerText = `${commentCount-1}개의 댓글이 있습니다.`
             })
           })
+
+          updateBtn.addEventListener('click', event => {
+            event.preventDefault()
+            const commentLi = updateBtn.parentNode
+            console.log(commentLi)
+            const input = document.createElement('input')
+
+            input.value = commentLi.childNodes[1].innerText
+
+            input.name = 'content'
+            
+            const newUpdateBtn = document.createElement('button')
+            newUpdateBtn.innerText = 'update'
+            
+            newUpdateBtn.addEventListener('click', event => {
+              let data = new FormData()
+              data.append('content', input.value)
+              axios({
+                method: 'post',
+                url: `http://127.0.0.1:8000/articles/{{article.pk}}/comments/${commentPk}/update/`,
+                data,
+                headers: {
+                  'X-CSRFToken': csrftoken}
+              })
+              .then(response => {
+                const { commentPk, articlePk, userName } = response.data
+                commentLi.innerText = `${userName} - ${input.value}`
+
+              })
+            })
+
+            commentLi.innerText = ''
+            commentLi.append(input, newUpdateBtn)
+
+              })
 
           input.value = ''
         })
     })
 
-    // 댓글 수정
-      updateTags.forEach(btn => {
-      btn.addEventListener('click', event => {
-        console.log(btn)
-        event.preventDefault()
-        const commentLi = btn.parentNode
-        const { commentPk } = commentLi.dataset
-        const input = document.createElement('input')
-
-        input.value = commentLi.childNodes[1].innerText
-
-        input.name = 'content'
-        
-        const newUpdateBtn = document.createElement('button')
-        newUpdateBtn.innerText = 'update'
-        
-        newUpdateBtn.addEventListener('click', event => {
-          let data = new FormData()
-          data.append('content', input.value)
-          axios({
-            method: 'post',
-            url: `http://127.0.0.1:8000/articles/{{article.pk}}/comments/${commentPk}/update/`,
-            data,
-            headers: {
-              'X-CSRFToken': csrftoken}
-          })
-          .then(response => {
-  
-            const { commentPk, articlePk, userName } = response.data
-            commentLi.innerText = `${userName} - ${input.value}`
-            const deleteBtn = document.createElement('button')
-            deleteBtn.innerText = 'Delete'
-            commentLi.append(deleteBtn,btn)
-          })
-        })
-
-        commentLi.innerText = ''
-        commentLi.append(input, newUpdateBtn)
-
-      })
-    })
-    
   </script>
 {% endblock script %}
 
