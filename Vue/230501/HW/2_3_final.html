@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+<body>
+  <h1>Todo List</h1>
+  <div id="app">
+    <p>
+      <input type="text" v-model="message">
+      <button @click="todo">+</button>
+      <ul>
+        <li v-for="(value, index) in todoLists">
+          <label :class="{ 'completed': todoLists[index].completed }">
+            <input type="checkbox" v-model="todoLists[index].completed" @change="check(index)">
+            <span>{{ todoLists[index].title }}</span>
+          </label>
+        </li>
+      </ul>
+    </p>
+    <button @click="allDelete">완료 목록 삭제</button>
+  </div>
+
+  <style>
+    .completed {
+      text-decoration: line-through;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message:'',
+        todoLists:[],
+        completedLists:[],
+      },
+      methods: {
+        todo: function () {
+          if(!this.message){
+            window.alert("내용을 입력해 주세요")
+          } else {
+            this.todoLists.push({title: this.message, completed: false});
+            this.message = '';
+          }
+        },
+        check: function (index) {
+          if(this.todoLists[index].completed){
+            this.completedLists.push(index);
+          } else {
+            const i = this.completedLists.indexOf(index);
+            if (i > -1){
+              this.completedLists.splice(i, 1);
+            }
+          }
+        },
+        allDelete: function() {
+          for (let i = this.completedLists.length - 1; i >= 0; i--) {
+            const index = this.completedLists[i];
+            this.todoLists.splice(index, 1);
+          }
+          this.completedLists = [];
+        }
+      }
+    })
+  </script>
+</body>
+</html>
