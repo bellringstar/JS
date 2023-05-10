@@ -26,7 +26,7 @@ export default {
         method: 'get',
         url:'https://www.googleapis.com/youtube/v3/search',
         params: {
-          key:'AIzaSyAEYqoI6w4Hm8r-QXTigyG6yEO53essRGI',
+          key: process.env
           part:'snippet',
           type: 'video',
           q: this.query,
