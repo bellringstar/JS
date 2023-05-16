@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Article Page</h1>
-    <router-link :to="{ name: 'CreateView' }">[CREATE]</router-link>
+    <router-link :to="{ name: 'CreateView' }" v-if="this.$store.getters.isLogin">[CREATE]</router-link>
     <ArticleList />
     <hr>
   </div>
@@ -17,7 +17,7 @@ export default {
   },
   computed:{
     isLogin() {
-      return this.$store.getters.isLogin
+      return this.$store.getters.isLogin // 로그인 여부
     }
   },
   created() {
@@ -25,12 +25,8 @@ export default {
   },
   methods: {
     getArticles() {
-      //로그인이 돼 있으면 getArticles
-      if(this.isLogin) {
-        this.$store.dispatch('getArticles')    
-      } else {
-        this.$router.push({name:'LogInView'})
-      }
+        this.$store.dispatch('getArticles')
+
     }
   }
 }

@@ -1,17 +1,17 @@
 <template>
   <div>
-    <h1>Sign Up Page</h1>
+    <h1>회원가입</h1>
     <form @submit.prevent="signUp">
-      <label for="username">username : </label>
+      <p>아이디</p>
       <input type="text" id="username" v-model="username"><br>
 
-      <label for="password1"> password : </label>
+      <p>비밀번호</p>
       <input type="password" id="password1" v-model="password1"><br>
 
-      <label for="password2"> password confirmation : </label>
+      <p>비밀번호 확인</p>
       <input type="password" id="password2" v-model="password2">
       
-      <input type="submit" value="SignUp">
+      <input type="submit" value="회원가입">
     </form>
   </div>
 </template>
@@ -21,14 +21,14 @@ export default {
   name: 'SignUpView',
   data() {
     return {
-      username:null,
-      password1:null,
-      password2:null,
+      username: null,
+      password1: null,
+      password2: null,
     }
   },
   methods: {
     signUp() {
-      // console.log('signUP')
+      // console.log('signup')
       const username = this.username
       const password1 = this.password1
       const password2 = this.password2
@@ -38,6 +38,7 @@ export default {
       }
 
       this.$store.dispatch('signUp', payload)
+
     }
   }
 }

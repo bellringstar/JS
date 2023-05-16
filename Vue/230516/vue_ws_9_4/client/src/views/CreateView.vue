@@ -29,6 +29,10 @@ export default {
     createArticle() {
       const title = this.title
       const content = this.content
+      if (this.$store.getters.isLogin){
+        alert("로그인 해주세요")
+        this.$router.push({name:"LogInView"})
+      }
 
       if (!title) {
         alert('제목 입력해주세요')
@@ -39,14 +43,13 @@ export default {
       }
       axios({
         method: 'post',
-        url: `${API_URL}/api/v1/articles/`,
+        url: `${API_URL}/articles/`,
         data: { title, content},
         headers: {
-          Authorization: `Token ${this.$store.state.token}`
+          Authorization: `Token ${ this.$store.state.token }`
         }
       })
       .then(() => {
-        // console.log(res)
         this.$router.push({name: 'ArticleView'})
       })
       .catch((err) => {
